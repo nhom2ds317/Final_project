@@ -159,8 +159,8 @@ overall_khoa_search_s = None
 target_search_s = None
 overall_search = None
 target_search = None
-ratio1 = None
-ratio2 = None
+radio1 = None
+radio2 = None
 
 # I. Thống kê sinh viên đã hoàn thành khóa học
 
@@ -170,13 +170,13 @@ with st.sidebar:
     
 if statistic_all:
     with st.sidebar:
-        st.write('Mời bạn chọn phạm vi tra cứu:')
-        ratio1 = st.ratio('Mời bạn chọn phạm vi tra cứu:', ['Toàn trường', 'Theo khoa', 'Sinh viên cụ thể'])
+        #st.write('Mời bạn chọn phạm vi tra cứu:')
+        radio1 = st.radio('Mời bạn chọn phạm vi tra cứu:', ['Toàn trường', 'Theo khoa', 'Sinh viên cụ thể'])
         #overall_search_s = st.checkbox('Toàn trường', key='overall_search_s')
         #overall_khoa_search_s = st.checkbox('Theo khoa')
         #target_search_s = st.checkbox('Sinh viên cụ thể', key='target_search_s')
         
-if ratio1 == 'Toàn trường':
+if radio1 == 'Toàn trường':
     overall_search_s_1 = st.checkbox('Xem danh sách sinh viên')
     overall_search_s_2 = st.checkbox('Biểu đồ kết quả xếp loại tốt nghiệp')
     overall_search_s_3 = st.checkbox('Biểu đồ phân bố lý do rớt tốt nghiệp của các sinh viên')
@@ -203,7 +203,7 @@ if ratio1 == 'Toàn trường':
         df_os4 = df_org.groupby(['khoahoc', 'xeploai']).size().reset_index(name='count')
         make_bar_chart(df_os4, 'khoahoc', 'count', 'xeploai', 0, 'Kết quả tốt nghiệp của các khóa sinh viên', 'Khóa học', 'Số lượng sinh viên', 0.3, pc.sequential.RdBu)
         
-elif ratio1 == 'Theo khoa':
+elif radio1 == 'Theo khoa':
     coloks1, coloks2 = st.columns(2)
     with coloks1:
         khoa_overall = st.selectbox('Mời bạn chọn khoa:', [u for u in list(np.append(np.array('Toàn khoa'), df_org['khoa'].unique()))], key='khoa_overall')
@@ -377,11 +377,11 @@ if predict_all:
             needed_col = needed_cols35
             predict_col = predict_cols35
         #st.write('Mời bạn chọn phạm vi tra cứu:')
-        ratio2 = st.ratio('Mời bạn chọn phạm vi tra cứu:', ['Tổng quát', 'Sinh viên cụ thể'])
+        radio2 = st.radio('Mời bạn chọn phạm vi tra cứu:', ['Tổng quát', 'Sinh viên cụ thể'])
         #overall_search = st.checkbox('Tổng quát')
         #target_search = st.checkbox('Sinh viên cụ thể')
 
-if ratio2 == 'Tổng quát':
+if radio2 == 'Tổng quát':
     col1, col2 = st.columns(2)
     with col1:
         khoa = st.selectbox('Mời bạn chọn khoa:', [u for u in list(np.append(np.array('Toàn khoa'), df_main['khoa'].unique()))])
@@ -511,7 +511,7 @@ if ratio2 == 'Tổng quát':
                     st.warning('Không có sinh viên nào có xếp loại tốt nghiệp dự đoán là ' + xl2 + ' trong tất cả các khoa')
 
 
-elif ratio2 == 'Sinh viên cụ thể':
+elif radio2 == 'Sinh viên cụ thể':
     mssv = st.text_input('Mời bạn nhập mã số sinh viên cần tra cứu:', key='mssv')
     if mssv:
         if mssv in df_main['mssv'].unique():
