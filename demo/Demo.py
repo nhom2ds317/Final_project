@@ -13,12 +13,12 @@ import plotly.colors as pc
 
 #Thiết lập các thông tin cần thiết
 
-df_org = pd.read_csv("D:\Learning\Semester 1 year 4\DS317\Project\Data\daxuly.csv")
+df_org = pd.read_csv("../daxuly.csv")
 df_org = df_org.rename(columns={'label': 'xeploai'})
-df_y1 = pd.read_csv('test_data_for_demo_year1.csv')
-df_y2 = pd.read_csv('test_data_for_demo_year2.csv')
-df_y3 = pd.read_csv('test_data_for_demo_year3.csv')
-df_y35 = pd.read_csv('test_data_for_demo_year35.csv')
+df_y1 = pd.read_csv('../test_data_for_demo_year1.csv')
+df_y2 = pd.read_csv('../test_data_for_demo_year2.csv')
+df_y3 = pd.read_csv('../test_data_for_demo_year3.csv')
+df_y35 = pd.read_csv('../test_data_for_demo_year35.csv')
 
 def xettn(row):
     reasons = []
@@ -76,13 +76,13 @@ predict_cols35 = ['namsinh', 'gioitinh', 'noisinh', 'khoa', 'hedt', 'khoahoc',
        'sotc_rot3', 'rotmon_3_5', 'tctichluy1', 'tctichluy2', 'tctichluy3',
        'tc_tichluy_3_5', 'socc_tienganh', 'tienganh', 'canhcao']
 
-with open("model_cb_sm_y1.pkl", "rb") as file:
+with open("../model_cb_sm_y1.pkl", "rb") as file:
     model_y1 = pickle.load(file)
-with open("model_xg_ts_y2.pkl", "rb") as file:
+with open("../model_xg_ts_y2.pkl", "rb") as file:
     model_y2 = pickle.load(file)
-with open("model_xg_ts_y3.pkl", "rb") as file:
+with open("../model_xg_ts_y3.pkl", "rb") as file:
     model_y3 = pickle.load(file)
-with open("model_lgb_ts_y35.pkl", "rb") as file:
+with open("../model_lgb_ts_y35.pkl", "rb") as file:
     model_y35 = pickle.load(file)
     
 def predict(df, df_org, model, predict_col):
