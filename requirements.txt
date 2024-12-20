@@ -5,6 +5,6 @@ scikit-learn
 lightgbm
 matplotlib
 xgboost
-catboost==1.2
+catboost
 seaborn
 plotly
