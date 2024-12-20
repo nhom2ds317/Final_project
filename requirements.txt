@@ -8,3 +8,4 @@ xgboost
 catboost==1.2
 seaborn
 plotly
+setuptools
