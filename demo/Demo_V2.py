@@ -332,7 +332,7 @@ elif radio1 == 'Theo khoa':
                 else:
                     st.warning('Không có sinh viên nào có xếp loại tốt nghiệp là ' + xloksa2 + ' trong tất cả các khoa')
         
-else:
+elif radio1 == 'Sinh viên cụ thể':
     mssv_all = st.text_input('Mời bạn nhập mã số sinh viên cần tra cứu:', key='mssv_all')
     if mssv_all:
         if mssv_all in df_org['mssv'].unique():
