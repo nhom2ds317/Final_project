@@ -22,7 +22,7 @@
 
 ## 4. In ra các thông tin
 
-### a) Xem thông tin sinh viên đã hoàn thành chương trình học
+### a) Xem thông tin sinh viên đã hoàn thành chương trình học:
 - **Xem danh sách sinh viên**:
   - Xem danh sách sinh viên với các loại tốt nghiệp, với phạm vi toàn trường, theo khoa hoặc theo từng lớp.
   - Lọc theo từng loại xếp loại tốt nghiệp.
@@ -38,7 +38,7 @@
 - **Biểu đồ phân phối loại tốt nghiệp theo khóa học**:
   - Hiển thị biểu đồ phân phối loại tốt nghiệp theo các khóa học, giúp theo dõi xu hướng học tập qua từng khóa học.
 
-### b) Xem thông tin dự đoán xếp loại tốt nghiệp với sinh viên còn đang học
+### b) Xem thông tin dự đoán xếp loại tốt nghiệp với sinh viên còn đang học:
 - **Kết quả dự đoán theo năm học:**
   - Hiển thị kết quả dự đoán xếp loại tốt nghiệp cho từng năm học.
 - **Danh sách sinh viên theo nhãn dự đoán:**
@@ -46,7 +46,7 @@
   - Tùy chọn xem danh sách sinh viên dự đoán theo từng nhãn (Giỏi, Khá, Trung bình, Rớt).
   - Tính năng xuất danh sách sinh viên cần quan tâm (ví dụ: sinh viên dự đoán "Rớt") để cải thiện kết quả học tập.
 
-- ** Biểu đồ phân bố tỷ lệ nhãn tốt nghiệp**:
+- **Biểu đồ phân bố tỷ lệ nhãn tốt nghiệp**:
   - Hiển thị biểu đồ phân bố xếp loại tốt nghiệp của sinh viên giữa các khoa hoặc giữa các lớp trong 1 khoa hoặc của 1 lớp cụ thể.
   - Tùy chọn: Người dùng có thể lọc và xem biểu đồ theo lớp sinh hoạt hoặc khoa đào tạo.
 
