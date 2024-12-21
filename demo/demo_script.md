@@ -46,9 +46,9 @@
   - Tùy chọn xem danh sách sinh viên dự đoán theo từng nhãn (Giỏi, Khá, Trung bình, Rớt).
   - Tính năng xuất danh sách sinh viên cần quan tâm (ví dụ: sinh viên dự đoán "Rớt") để cải thiện kết quả học tập.
 
-### Biểu đồ phân bố tỷ lệ nhãn tốt nghiệp:
-- Hiển thị biểu đồ phân bố xếp loại tốt nghiệp của sinh viên giữa các khoa hoặc giữa các lớp trong 1 khoa hoặc của 1 lớp cụ thể.
-- Tùy chọn: Người dùng có thể lọc và xem biểu đồ theo lớp sinh hoạt hoặc khoa đào tạo.
+- ** Biểu đồ phân bố tỷ lệ nhãn tốt nghiệp**:
+  - Hiển thị biểu đồ phân bố xếp loại tốt nghiệp của sinh viên giữa các khoa hoặc giữa các lớp trong 1 khoa hoặc của 1 lớp cụ thể.
+  - Tùy chọn: Người dùng có thể lọc và xem biểu đồ theo lớp sinh hoạt hoặc khoa đào tạo.
 
 ## 5. Kỳ vọng từ Demo
 
