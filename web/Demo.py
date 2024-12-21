@@ -14,6 +14,7 @@ import plotly.colors as pc
 #Thiết lập các thông tin cần thiết
 
 df_org = pd.read_csv("web/datatoantruong.csv")
+df_org = df_org[df_org['label'] != 'Chưa tốt nghiệp']
 df_org_0 = pd.read_csv("web/daxuly.csv")
 df_org = df_org.rename(columns={'label': 'xeploai'})
 df_y1 = pd.read_csv('web/test_data_for_demo_year1.csv')
