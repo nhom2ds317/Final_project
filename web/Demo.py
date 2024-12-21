@@ -173,10 +173,12 @@ if statistic_all:
         radio1 = st.radio('Mời bạn chọn phạm vi cần tra cứu:', ['Toàn trường', 'Theo khoa', 'Sinh viên cụ thể'], key='radio1')
         
 if radio1 == 'Toàn trường':
-    overall_search_s_1 = st.checkbox('Xem danh sách sinh viên')
-    overall_search_s_2 = st.checkbox('Biểu đồ kết quả xếp loại tốt nghiệp')
-    overall_search_s_3 = st.checkbox('Biểu đồ phân bố lý do rớt tốt nghiệp của các sinh viên')
-    overall_search_s_4 = st.checkbox('Biểu đồ phân bố loại tốt nghiệp theo khóa')
+    overall_search_s_1 = st.checkbox('Xem danh sách sinh viên', key='oss1')
+    overall_search_s_2 = st.checkbox('Biểu đồ kết quả xếp loại tốt nghiệp', key='oss2')
+    overall_search_s_3 = st.checkbox('Biểu đồ phân bố lý do rớt tốt nghiệp của các sinh viên', key='oss3')
+    overall_search_s_4 = st.checkbox('Biểu đồ phân bố loại tốt nghiệp theo khóa', key='oss4')
+    overall_search_s_5 = st.checkbox('Biểu đồ so sánh điểm trung bình giữa các khoa', key='oss5')
+    overall_search_s_6 = st.checkbox('Biểu đồ so sánh xếp loại tốt nghiệp giữa các khoa', key='oss6')
     st.divider()
     if overall_search_s_1:
         xl0 = st.selectbox('Chọn loại tốt nghiệp:', ['Tất cả', 'Rớt', 'Trung bình', 'Trung bình khá', 'Khá', 'Giỏi', 'Xuất sắc'], key='xl0')
@@ -198,135 +200,112 @@ if radio1 == 'Toàn trường':
     if overall_search_s_4:
         df_os4 = df_org.groupby(['khoahoc', 'xeploai']).size().reset_index(name='count')
         make_bar_chart(df_os4, 'khoahoc', 'count', 'xeploai', 0, 'Kết quả tốt nghiệp của các khóa sinh viên', 'Khóa học', 'Số lượng sinh viên', 0.3, pc.sequential.RdBu)
+    if overall_search_s_5:
+        df_os5 = df_org.groupby('khoa')['dtb_toankhoa'].mean().reset_index()
+
+        df_os5 = df_os5.sort_values(by='dtb_toankhoa', ascending=False)
+        df_os5['dtb_toankhoa'] = df_os5['dtb_toankhoa'].round(2)
+
+        make_bar_chart(df_os5, 'khoa', 'dtb_toankhoa', 0, 'dtb_toankhoa', 'Kết quả học tập của mỗi khoa', 'Khoa', 'Điểm trung bình', 0.3, pc.sequential.Agsunset)
+    if overall_search_s_6:
+        xlos6 = st.selectbox('Chọn loại tốt nghiệp:', ['Tất cả', 'Rớt', 'Trung bình', 'Trung bình khá', 'Khá', 'Giỏi', 'Xuất sắc'], key='xlos6')
+        if xlos6 == 'Tất cả':
+            df_os6 = df_org.groupby(['khoa', 'xeploai']).size().reset_index(name='count')
+            make_bar_chart(df_os6, 'khoa', 'count', 'xeploai', 'count', 'Biểu đồ so sánh xếp loại tốt nghiệp của tất cả các khoa', 'Khoa', 'Số lượng sinh viên', 0.1, pc.sequential.RdBu)
+        else:
+            df_os6 = df_org.groupby(['khoa', 'xeploai']).size().reset_index(name='count')
+            df_os6 = df_os6[df_os6['xeploai'] == xlos6]
+            if len(df_os6) != 0:
+                make_bar_chart(df_os6, 'khoa', 'count', 0, 'count', 'Biểu đồ so sánh xếp loại tốt nghiệp là ' + xlos6 + ' của tất cả các khoa', 'Khoa', 'Số lượng sinh viên', 0.1, pc.sequential.RdBu)
+            else:
+                st.warning('Không có sinh viên nào có xếp loại tốt nghiệp là ' + xlos6 + ' trong tất cả các khoa')
         
 elif radio1 == 'Theo khoa':
     coloks1, coloks2 = st.columns(2)
     with coloks1:
-        khoa_overall = st.selectbox('Mời bạn chọn khoa:', [u for u in list(np.append(np.array('Toàn khoa'), df_org['khoa'].unique()))], key='khoa_overall')
+        khoa_overall = st.selectbox('Mời bạn chọn khoa:', [u for u in df_org['khoa'].unique()], key='khoa_overall')
     with coloks2:
-        if khoa_overall != 'Toàn khoa':
-            df_khoa_overall = df_org[df_org['khoa'] == khoa_overall]
-            lop_overall = st.selectbox('Mời bạn chọn 1 lớp sinh hoạt của sinh viên:', [u for u in df_khoa_overall['lopsh'].unique()], key='lop_overall')
-            df_lop_overall = df_khoa_overall[df_khoa_overall['lopsh'] == lop_overall]
-    if khoa_overall != 'Toàn khoa':
-        st.write('Mời bạn chọn các chức năng:')
-        oks1 = st.checkbox('Xem danh sách sinh viên với xếp loại tốt nghiệp dự đoán', key='oks1')
-        oks2 = st.checkbox('Biểu đồ thống kê xếp loại tốt nghiệp dự đoán', key='oks2')
-        oks3 = st.checkbox('Biểu đồ so sánh xếp loại tốt nghiệp dự đoán của các lớp trong khoa', key='oks3')
-        if oks1:
-            coloks3, coloks4 = st.columns(2)
-            with coloks3:
-                opt_oks1 = st.selectbox('Mời bạn chọn đối tượng:', ['Khoa', 'Lớp', 'Khoa và Lớp'], key='opt_oks1')
-            with coloks4:
-                xl5 = st.selectbox('Chọn loại tốt nghiệp:', ['Tất cả', 'Rớt', 'Trung bình', 'Trung bình khá', 'Khá', 'Giỏi', 'Xuất sắc'], key='xl5')
-            if opt_oks1 == 'Khoa':
-                if xl5 != 'Tất cả':
-                    df_oks1 = df_khoa_overall[df_khoa_overall['xeploai'] == xl5]
-                    csv_oks1 = df_oks1.to_csv(index=False)
-                else:
-                    df_oks1 = df_khoa_overall.copy()
-                    csv_oks1 = df_oks1.to_csv(index=False)
-                st.dataframe(df_oks1[needed_cols35])
-                st.download_button(label='Tải xuống danh sách sinh viên', data=csv_oks1, file_name='DS_sinh_vien.csv', mime='text/csv', key='dl_os_one_1')
-            elif opt_oks1 == 'Lớp':
-                if xl5 != 'Tất cả':
-                    df_oksl1 = df_lop_overall[df_lop_overall['xeploai'] == xl5]
-                    csv_oksl1 = df_oksl1.to_csv(index=False)
-                else:
-                    df_oksl1 = df_lop_overall.copy()
-                    csv_oksl1 = df_oksl1.to_csv(index=False)
-                st.dataframe(df_oksl1[needed_cols35])
-                st.download_button(label='Tải xuống danh sách sinh viên', data=csv_oksl1, file_name='DS_sinh_vien.csv', mime='text/csv', key='dl_os_one_lop_1')
+        df_khoa_overall = df_org[df_org['khoa'] == khoa_overall]
+        lop_overall = st.selectbox('Mời bạn chọn 1 lớp sinh hoạt của sinh viên:', [u for u in df_khoa_overall['lopsh'].unique()], key='lop_overall')
+        df_lop_overall = df_khoa_overall[df_khoa_overall['lopsh'] == lop_overall]
+    st.write('Mời bạn chọn các chức năng:')
+    oks1 = st.checkbox('Xem danh sách sinh viên với xếp loại tốt nghiệp dự đoán', key='oks1')
+    oks2 = st.checkbox('Biểu đồ thống kê xếp loại tốt nghiệp dự đoán', key='oks2')
+    oks3 = st.checkbox('Biểu đồ so sánh xếp loại tốt nghiệp dự đoán của các lớp trong khoa', key='oks3')
+    if oks1:
+        coloks3, coloks4 = st.columns(2)
+        with coloks3:
+            opt_oks1 = st.selectbox('Mời bạn chọn đối tượng:', ['Khoa', 'Lớp', 'Khoa và Lớp'], key='opt_oks1')
+        with coloks4:
+            xl5 = st.selectbox('Chọn loại tốt nghiệp:', ['Tất cả', 'Rớt', 'Trung bình', 'Trung bình khá', 'Khá', 'Giỏi', 'Xuất sắc'], key='xl5')
+        if opt_oks1 == 'Khoa':
+            if xl5 != 'Tất cả':
+                df_oks1 = df_khoa_overall[df_khoa_overall['xeploai'] == xl5]
+                csv_oks1 = df_oks1.to_csv(index=False)
             else:
-                st.write('Khoa:')
-                if xl5 != 'Tất cả':
-                    df_oks1 = df_khoa_overall[df_khoa_overall['xeploai'] == xl5]
-                    csv_oks1 = df_oks1.to_csv(index=False)
-                else:
-                    df_oks1 = df_khoa_overall.copy()
-                    csv_oks1 = df_oks1.to_csv(index=False)
-                st.dataframe(df_oks1[needed_cols35])
-                st.download_button(label='Tải xuống danh sách sinh viên', data=csv_oks1, file_name='DS_sinh_vien.csv', mime='text/csv', key='dl_os_one_1')
-                
-                st.write('Lớp:')
-                if xl5 != 'Tất cả':
-                    df_oksl1 = df_lop_overall[df_lop_overall['xeploai'] == xl5]
-                    csv_oksl1 = df_oksl1.to_csv(index=False)
-                else:
-                    df_oksl1 = df_lop_overall.copy()
-                    csv_oksl1 = df_oksl1.to_csv(index=False)
-                st.dataframe(df_oksl1[needed_cols35])
-                st.download_button(label='Tải xuống danh sách sinh viên', data=csv_oksl1, file_name='DS_sinh_vien.csv', mime='text/csv', key='dl_os_one_lop_1')
-        if oks2:
-            opt_oks2 = st.selectbox('Thống kê theo:', ['Khoa', 'Lớp', 'Khoa và Lớp'], key='opt_osk2')
-            if opt_oks2 == 'Khoa':
-                df_oks2 = df_khoa_overall['xeploai'].value_counts().reset_index()
-                df_oks2.columns = ['Xếp loại', 'Số lượng']
-                make_bar_chart(df_oks2, 'Xếp loại', 'Số lượng', 0, 'Số lượng', 'Kết quả xếp loại tốt nghiệp của khoa ' + khoa_overall, 'Xếp loại', 'Số lượng sinh viên', 0.2, pc.sequential.Brwnyl)
-            elif opt_oks2 == 'Lớp':
-                df_oksl2 = df_lop_overall['xeploai'].value_counts().reset_index()
-                df_oksl2.columns = ['Xếp loại', 'Số lượng']
-                make_bar_chart(df_oksl2, 'Xếp loại', 'Số lượng', 0, 'Số lượng', 'Kết quả xếp loại tốt nghiệp của lớp ' + lop_overall, 'Xếp loại', 'Số lượng sinh viên', 0.2, pc.sequential.Emrld)
+                df_oks1 = df_khoa_overall.copy()
+                csv_oks1 = df_oks1.to_csv(index=False)
+            st.dataframe(df_oks1[needed_cols35])
+            st.download_button(label='Tải xuống danh sách sinh viên', data=csv_oks1, file_name='DS_sinh_vien.csv', mime='text/csv', key='dl_os_one_1')
+        elif opt_oks1 == 'Lớp':
+            if xl5 != 'Tất cả':
+                df_oksl1 = df_lop_overall[df_lop_overall['xeploai'] == xl5]
+                csv_oksl1 = df_oksl1.to_csv(index=False)
             else:
-                df_oks2 = df_khoa_overall['xeploai'].value_counts().reset_index()
-                df_oks2.columns = ['Xếp loại', 'Số lượng']
-                make_bar_chart(df_oks2, 'Xếp loại', 'Số lượng', 0, 'Số lượng', 'Kết quả xếp loại tốt nghiệp của khoa ' + khoa_overall, 'Xếp loại', 'Số lượng sinh viên', 0.2, pc.sequential.Brwnyl)
-                
-                df_oksl2 = df_lop_overall['xeploai'].value_counts().reset_index()
-                df_oksl2.columns = ['Xếp loại', 'Số lượng']
-                make_bar_chart(df_oksl2, 'Xếp loại', 'Số lượng', 0, 'Số lượng', 'Kết quả xếp loại tốt nghiệp của lớp ' + lop_overall, 'Xếp loại', 'Số lượng sinh viên', 0.2, pc.sequential.Emrld)
-        if oks3:
-            xloks3 = st.selectbox('Chọn loại tốt nghiệp:', ['Tất cả', 'Rớt', 'Trung bình', 'Trung bình khá', 'Khá', 'Giỏi', 'Xuất sắc'], key='xloks3')
-            if xloks3 == 'Tất cả':
-                df_oks3 = df_khoa_overall.groupby(['lopsh', 'xeploai']).size().reset_index(name='count')
-                make_bar_chart(df_oks3, 'lopsh', 'count', 'xeploai', 'count', 'Biểu đồ so sánh xếp loại tốt nghiệp của tất cả các lớp trong khoa', 'Lớp sinh hoạt', 'Số lượng sinh viên', 0.1, pc.sequential.RdBu)
+                df_oksl1 = df_lop_overall.copy()
+                csv_oksl1 = df_oksl1.to_csv(index=False)
+            st.dataframe(df_oksl1[needed_cols35])
+            st.download_button(label='Tải xuống danh sách sinh viên', data=csv_oksl1, file_name='DS_sinh_vien.csv', mime='text/csv', key='dl_os_one_lop_1')
+        else:
+            st.write('Khoa:')
+            if xl5 != 'Tất cả':
+                df_oks1 = df_khoa_overall[df_khoa_overall['xeploai'] == xl5]
+                csv_oks1 = df_oks1.to_csv(index=False)
             else:
-                df_oks3 = df_khoa_overall.groupby(['lopsh', 'xeploai']).size().reset_index(name='count')
-                df_oks3 = df_oks3[df_oks3['xeploai'] == xloks3]
-                if len(df_oks3) != 0:
-                    make_bar_chart(df_oks3, 'lopsh', 'count', 0, 'count', 'Biểu đồ so sánh xếp loại tốt nghiệp là ' + xloks3 + ' của tất cả các lớp trong khoa', 'Lớp sinh hoạt', 'Số lượng sinh viên', 0.1, pc.sequential.RdBu)
-                else:
-                    st.warning('Không có sinh viên nào có xếp loại tốt nghiệp là ' + xloks3 + ' trong khoa ' + khoa_overall)
-    else:
-        st.write('Mời bạn chọn các chức năng sau:')
-        oksa1 = st.checkbox('Xem danh sách sinh viên với xếp loại tốt nghiệp', key='oksa1')
-        oksa2 = st.checkbox('Biểu đồ thống kê xếp loại tốt nghiệp', key='oksa2')
-        oksa3 = st.checkbox('Biểu đồ so sánh điểm trung bình giữa các khoa', key='oksa3')
-        oksa4 = st.checkbox('Biểu đồ so sánh xếp loại tốt nghiệp giữa các khoa', key='oksa4')
-        st.divider()
-        if oksa1:
-            xloksa1 = st.selectbox('Chọn loại tốt nghiệp:', ['Tất cả', 'Rớt', 'Trung bình', 'Trung bình khá', 'Khá', 'Giỏi', 'Xuất sắc'], key='xloksa1')
-            if xloksa1 != 'Tất cả':
-                df_oksa1 = df_org[df_org['xeploai'] == xloksa1]
-                csv_oksa1 = df_oksa1.to_csv(index=False)
+                df_oks1 = df_khoa_overall.copy()
+                csv_oks1 = df_oks1.to_csv(index=False)
+            st.dataframe(df_oks1[needed_cols35])
+            st.download_button(label='Tải xuống danh sách sinh viên', data=csv_oks1, file_name='DS_sinh_vien.csv', mime='text/csv', key='dl_os_one_1')
+            
+            st.write('Lớp:')
+            if xl5 != 'Tất cả':
+                df_oksl1 = df_lop_overall[df_lop_overall['xeploai'] == xl5]
+                csv_oksl1 = df_oksl1.to_csv(index=False)
             else:
-                df_oksa1 = df_org.copy()
-                csv_oksa1 = df_oksa1.to_csv(index=False)
-            st.dataframe(df_oksa1[needed_cols35])
-            st.download_button(label='Tải xuống danh sách sinh viên', data=csv_oksa1, file_name='DS_sinh_vien.csv', mime='text/csv')
-        if oksa2:
-            df_oksa2 = df_org['xeploai'].value_counts().reset_index()
-            df_oksa2.columns = ['Xếp loại', 'Số lượng']
-            make_bar_chart(df_oksa2, 'Xếp loại', 'Số lượng', 0, 'Số lượng', 'Kết quả xếp loại tốt nghiệp của tất cả các khoa', 'Xếp loại', 'Số lượng sinh viên', 0.2, pc.sequential.Brwnyl)
-        if oksa3:
-            df_oksa3 = df_org.groupby('khoa')['dtb_toankhoa'].mean().reset_index()
-
-            df_oksa3 = df_oksa3.sort_values(by='dtb_toankhoa', ascending=False)
-            df_oksa3['dtb_toankhoa'] = df_oksa3['dtb_toankhoa'].round(2)
-
-            make_bar_chart(df_oksa3, 'khoa', 'dtb_toankhoa', 0, 'dtb_toankhoa', 'Kết quả học tập của mỗi khoa', 'Khoa', 'Điểm trung bình', 0.3, pc.sequential.Agsunset)
-        if oksa4:
-            xloksa2 = st.selectbox('Chọn loại tốt nghiệp:', ['Tất cả', 'Rớt', 'Trung bình', 'Trung bình khá', 'Khá', 'Giỏi', 'Xuất sắc'], key='xloksa2')
-            if xloksa2 == 'Tất cả':
-                df_oksa4 = df_org.groupby(['khoa', 'xeploai']).size().reset_index(name='count')
-                make_bar_chart(df_oksa4, 'khoa', 'count', 'xeploai', 'count', 'Biểu đồ so sánh xếp loại tốt nghiệp của tất cả các khoa', 'Khoa', 'Số lượng sinh viên', 0.1, pc.sequential.RdBu)
+                df_oksl1 = df_lop_overall.copy()
+                csv_oksl1 = df_oksl1.to_csv(index=False)
+            st.dataframe(df_oksl1[needed_cols35])
+            st.download_button(label='Tải xuống danh sách sinh viên', data=csv_oksl1, file_name='DS_sinh_vien.csv', mime='text/csv', key='dl_os_one_lop_1')
+    if oks2:
+        opt_oks2 = st.selectbox('Thống kê theo:', ['Khoa', 'Lớp', 'Khoa và Lớp'], key='opt_osk2')
+        if opt_oks2 == 'Khoa':
+            df_oks2 = df_khoa_overall['xeploai'].value_counts().reset_index()
+            df_oks2.columns = ['Xếp loại', 'Số lượng']
+            make_bar_chart(df_oks2, 'Xếp loại', 'Số lượng', 0, 'Số lượng', 'Kết quả xếp loại tốt nghiệp của khoa ' + khoa_overall, 'Xếp loại', 'Số lượng sinh viên', 0.2, pc.sequential.Brwnyl)
+        elif opt_oks2 == 'Lớp':
+            df_oksl2 = df_lop_overall['xeploai'].value_counts().reset_index()
+            df_oksl2.columns = ['Xếp loại', 'Số lượng']
+            make_bar_chart(df_oksl2, 'Xếp loại', 'Số lượng', 0, 'Số lượng', 'Kết quả xếp loại tốt nghiệp của lớp ' + lop_overall, 'Xếp loại', 'Số lượng sinh viên', 0.2, pc.sequential.Emrld)
+        else:
+            df_oks2 = df_khoa_overall['xeploai'].value_counts().reset_index()
+            df_oks2.columns = ['Xếp loại', 'Số lượng']
+            make_bar_chart(df_oks2, 'Xếp loại', 'Số lượng', 0, 'Số lượng', 'Kết quả xếp loại tốt nghiệp của khoa ' + khoa_overall, 'Xếp loại', 'Số lượng sinh viên', 0.2, pc.sequential.Brwnyl)
+            
+            df_oksl2 = df_lop_overall['xeploai'].value_counts().reset_index()
+            df_oksl2.columns = ['Xếp loại', 'Số lượng']
+            make_bar_chart(df_oksl2, 'Xếp loại', 'Số lượng', 0, 'Số lượng', 'Kết quả xếp loại tốt nghiệp của lớp ' + lop_overall, 'Xếp loại', 'Số lượng sinh viên', 0.2, pc.sequential.Emrld)
+    if oks3:
+        xloks3 = st.selectbox('Chọn loại tốt nghiệp:', ['Tất cả', 'Rớt', 'Trung bình', 'Trung bình khá', 'Khá', 'Giỏi', 'Xuất sắc'], key='xloks3')
+        if xloks3 == 'Tất cả':
+            df_oks3 = df_khoa_overall.groupby(['lopsh', 'xeploai']).size().reset_index(name='count')
+            make_bar_chart(df_oks3, 'lopsh', 'count', 'xeploai', 'count', 'Biểu đồ so sánh xếp loại tốt nghiệp của tất cả các lớp trong khoa', 'Lớp sinh hoạt', 'Số lượng sinh viên', 0.1, pc.sequential.RdBu)
+        else:
+            df_oks3 = df_khoa_overall.groupby(['lopsh', 'xeploai']).size().reset_index(name='count')
+            df_oks3 = df_oks3[df_oks3['xeploai'] == xloks3]
+            if len(df_oks3) != 0:
+                make_bar_chart(df_oks3, 'lopsh', 'count', 0, 'count', 'Biểu đồ so sánh xếp loại tốt nghiệp là ' + xloks3 + ' của tất cả các lớp trong khoa', 'Lớp sinh hoạt', 'Số lượng sinh viên', 0.1, pc.sequential.RdBu)
             else:
-                df_oksa4 = df_org.groupby(['khoa', 'xeploai']).size().reset_index(name='count')
-                df_oksa4 = df_oksa4[df_oksa4['xeploai'] == xloksa2]
-                if len(df_oksa4) != 0:
-                    make_bar_chart(df_oksa4, 'khoa', 'count', 0, 'count', 'Biểu đồ so sánh xếp loại tốt nghiệp là ' + xloksa2 + ' của tất cả các khoa', 'Khoa', 'Số lượng sinh viên', 0.1, pc.sequential.RdBu)
-                else:
-                    st.warning('Không có sinh viên nào có xếp loại tốt nghiệp là ' + xloksa2 + ' trong tất cả các khoa')
+                st.warning('Không có sinh viên nào có xếp loại tốt nghiệp là ' + xloks3 + ' trong khoa ' + khoa_overall)
         
 elif radio1 == 'Sinh viên cụ thể':
     mssv_all = st.text_input('Mời bạn nhập mã số sinh viên cần tra cứu:', key='mssv_all')
