@@ -1,0 +1,2 @@
+- _D1 là notebook sử dung bộ dữ liệu đã tiền xử lý nhưng chưa xử lý mất cân bằng nhãn để huấn luyện, sau đó xử lý mất cân bằng với 2 phương pháp là SMOTE và Đánh trọng số nhãn.
+- _D2 là notebook sử dung bộ dữ liệu thô để huấn luyện.
