@@ -13,7 +13,8 @@ import plotly.colors as pc
 
 #Thiết lập các thông tin cần thiết
 
-df_org = pd.read_csv("web/daxuly.csv")
+df_org = pd.read_csv("web/datatoantruong.csv")
+df_org_0 = pd.read_csv("web/daxuly.csv")
 df_org = df_org.rename(columns={'label': 'xeploai'})
 df_y1 = pd.read_csv('web/test_data_for_demo_year1.csv')
 df_y2 = pd.read_csv('web/test_data_for_demo_year2.csv')
@@ -321,10 +322,10 @@ elif radio1 == 'Sinh viên cụ thể':
 
 # 1. Dự đoán xếp loại bằng mô hình
 
-df_y1['xeploai'] = predict(df_y1, df_org, model_y1, predict_cols1)
-df_y2['xeploai'] = predict(df_y2, df_org, model_y2, predict_cols2)
-df_y3['xeploai'] = predict(df_y3, df_org, model_y3, predict_cols3)
-df_y35['xeploai'] = predict(df_y35, df_org, model_y35, predict_cols35)
+df_y1['xeploai'] = predict(df_y1, df_org_0, model_y1, predict_cols1)
+df_y2['xeploai'] = predict(df_y2, df_org_0, model_y2, predict_cols2)
+df_y3['xeploai'] = predict(df_y3, df_org_0, model_y3, predict_cols3)
+df_y35['xeploai'] = predict(df_y35, df_org_0, model_y35, predict_cols35)
 
 # 2. Các chức năng cụ thể
         
