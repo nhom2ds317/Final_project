@@ -1,6 +1,6 @@
 # KỊCH BẢN DEMO
 
-**Lưu ý:** Đối tượng xem demo là giảng viên cần có thông tin khái quát về tình hình học tập của sinh viên nhằm cải thiện chất lượng đào tạo.
+**Lưu ý:** Đối tượng sử dụng demo là giảng viên cần có thông tin khái quát về tình hình học tập của sinh viên nhằm cải thiện chất lượng đào tạo.
 
 ## 1. Mục tiêu Demo
 
