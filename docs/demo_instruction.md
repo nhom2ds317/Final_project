@@ -1,2 +1,2 @@
-- Vì demo của nhóm đã được deploy thành công trên Streamlit Cloud Community nên khi chạy demo, cô và các bạn chỉ cần truy cập vào đường link đến demo ở trong thư mục web/Demo_Url.
+- Vì demo của nhóm đã được deploy thành công trên Streamlit Cloud Community nên khi chạy demo, cô và các bạn chỉ cần truy cập vào đường link đến demo ở trong thư mục web/Demo_URL.
 - Video demo nằm ở trong folder demo, để xem được chúng ta cần tải xuống.
