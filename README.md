@@ -4,13 +4,13 @@
 Đề tài "Khai thác dữ liệu giáo dục để phân loại xếp loại tốt nghiệp sinh viên" được thực hiện nhằm xây dựng một hệ thống phân tích và dự đoán xếp loại tốt nghiệp. Hệ thống này hỗ trợ nhà trường trong việc đánh giá và theo dõi, giúp cải thiện chất lượng đào tạo một cách kịp thời và hiệu quả. Nghiên cứu này không chỉ góp phần nâng cao hiệu quả quản lý giáo dục mà còn giúp nhà trường tối ưu hóa chiến lược đào tạo, đồng thời mang lại giá trị thực tiễn trong việc định hướng phát triển cho sinh viên.
 
 ## 2. Định nghĩa bài toán
-Nhằm hỗ trợ nhà trường trong việc quản lý và theo dõi kết quả học tập của sinh viên một cách hiệu quả, chúng em đề ra hệ thống phân tích và dự đoán nhằm phân loại xếp loại tốt nghiệp sinh viên. Bài toán sẽ được mô tả với input và output như sau:
+Nhằm hỗ trợ nhà trường trong việc quản lý và theo dõi kết quả học tập của sinh viên một cách hiệu quả, nhóm đã đề ra hệ thống phân tích và dự đoán nhằm phân loại xếp loại tốt nghiệp sinh viên. Bài toán sẽ được mô tả với input và output như sau:
 - **Input của bài toán bao gồm**:
   - **Thông tin cá nhân**: Bao gồm mã số sinh viên, quê quán, năm sinh, ngành học, khóa học.
   - **Hành vi học tập**: Bao gồm điểm trung bình, điểm rèn luyện qua các học kỳ.
 - **Output của bài toán bao gồm**: Xếp loại tốt nghiệp của sinh viên theo 6 nhãn: “Rớt”, “Trung bình”, “Trung bình khá”, “Khá”, “Giỏi”, “Xuất sắc”.
 Để minh họa rõ ràng các giai đoạn trong đề tài này, sơ đồ dưới đây trình bày tổng quan các bước từ thu thập dữ liệu đến đánh giá kết quả. Quy trình được thiết kế theo hướng đảm bảo tính logic và tối ưu hóa hiệu quả.
-  [Sơ đồ tổng quan các bước của đồ án]
+  [Sơ đồ tổng quan các bước của đồ án][https://github.com/nhom2ds317/Final_project/blob/main/docs/Project_Framework.jpg]
 
 ## 3. Phạm vi và đối tượng
 - **Phạm vi**: Trường Đại học Công nghệ thông tin - UIT
