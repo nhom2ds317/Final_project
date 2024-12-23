@@ -10,9 +10,11 @@ Nhằm hỗ trợ nhà trường trong việc quản lý và theo dõi kết qu�
   - **Hành vi học tập**: Bao gồm điểm trung bình, điểm rèn luyện qua các học kỳ.
 - **Output của bài toán bao gồm**: Xếp loại tốt nghiệp của sinh viên theo 6 nhãn: “Rớt”, “Trung bình”, “Trung bình khá”, “Khá”, “Giỏi”, “Xuất sắc”.
 Để minh họa rõ ràng các giai đoạn trong đề tài này, sơ đồ dưới đây trình bày tổng quan các bước từ thu thập dữ liệu đến đánh giá kết quả. Quy trình được thiết kế theo hướng đảm bảo tính logic và tối ưu hóa hiệu quả.
-![Project_Framework](https://github.com/nhom2ds317/Final_project/blob/main/docs/Project_Framework.jpg)
-*Sơ đồ tổng quan các bước của đồ án*
 
+![Project_Framework](https://github.com/nhom2ds317/Final_project/blob/main/docs/Project_Framework.jpg)
+<div align="center">
+  *Sơ đồ tổng quan các bước của đồ án*
+</div>
 
 ## 3. Phạm vi và đối tượng
 - **Phạm vi**: Trường Đại học Công nghệ thông tin - UIT
