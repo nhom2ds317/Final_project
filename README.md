@@ -12,7 +12,7 @@ Nhằm hỗ trợ nhà trường trong việc quản lý và theo dõi kết qu�
 
 Để minh họa rõ ràng các giai đoạn trong đề tài này, sơ đồ dưới đây trình bày tổng quan các bước từ thu thập dữ liệu đến đánh giá kết quả. Quy trình được thiết kế theo hướng đảm bảo tính logic và tối ưu hóa hiệu quả.
 
-![Project_Framework](https://github.com/nhom2ds317/Final_project/blob/main/docs/Project_Framework.jpg)
+![Project_Framework](https://github.com/nhom2ds317/Final_project/blob/main/docs/Project_Framework.png)
 <div align="center">
   
   *Sơ đồ tổng quan các bước của đồ án*
